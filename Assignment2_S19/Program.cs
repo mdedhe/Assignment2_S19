@@ -13,17 +13,23 @@ namespace Assignment2_S19
             int[] a = { 1, 2, 3, 4, 5 };
             int[] r = rotLeft(a, d);
             displayArray(r);
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // Maximum toys
             Console.WriteLine("\n\nMaximum toys");
             int k = 50;
             int[] prices = { 1, 12, 5, 111, 200, 1000, 10 };
             Console.WriteLine(maximumToys(prices, k));
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
             List<int> arr = new List<int> { 1, 2, 3 };
             Console.WriteLine(balancedSums(arr));
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // Missing numbers
             Console.WriteLine("\n\nMissing numbers");
@@ -31,28 +37,38 @@ namespace Assignment2_S19
             int[] brr = {203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204};
             int[] r2 = missingNumbers(arr1, brr);
             displayArray(r2);
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // grading students
             Console.WriteLine("\n\nGrading students");
             int[] grades = { 73, 67, 38, 33 };
             int[] r3 = gradingStudents(grades);
             displayArray(r3);
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // find the median
             Console.WriteLine("\n\nFind the median");
             int[] arr2 = { 0, 1, 2, 4, 6, 5, 3};
             Console.WriteLine(findMedian(arr2));
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // closest numbers
             Console.WriteLine("\n\nClosest numbers");
             int[] arr3 = { 5, 4, 3, 2 };
             int[] r4 = closestNumbers(arr3);
             displayArray(r4);
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
 
             // Day of programmer
             Console.WriteLine("\n\nDay of Programmer");
             int year = 2017;
             Console.WriteLine(dayOfProgrammer(year));
+            Console.WriteLine("Press any key for next question..");
+            Console.ReadKey(true);
         }
 
         static void displayArray(int []arr) {
@@ -83,20 +99,135 @@ namespace Assignment2_S19
         // Complete the missingNumbers function below.
         static int[] missingNumbers(int[] arr, int[] brr)
         {
-            return new int[] { };
+             ArrayList l = new ArrayList();
+            int[] uArray = new int[arr.Length];
+            uArray = getUniqueArray(brr);
+            for (int i = 0; i < uArray.Length; i++)
+            {
+                int countb = 0;
+                for (int j = i; j < brr.Length; j++)
+                {
+                    // count inside it the each number count
+                    if (uArray[i] == brr[j])
+                    {
+                        countb++;
+                    }// end of if statement
+                }// end of the inner for
+                // now compare the count with the original array
+                int counta = 0;
+                for (int k = 0; k < arr.Length; k++)
+                {
+                    if (uArray[i] == arr[k])
+                    {
+                        counta++;
+                    }// end of if statement
+                }// end of the original array brr for one iteration of arr[]   
+                if (countb == counta)
+                    continue;
+                else
+                    l.Add(uArray[i]);
+            }// end of for loop
+            // create the missing term array 
+            int[] finalArr = new int[l.Count];
+            int c = 0;
+            foreach (int i in l)
+            {
+                finalArr[c] = i;
+                c++;
+            }// end of foreach 
+            return finalArr;
+        }
+         static int[] getUniqueArray(int[] brr)
+        {
+            int[] sarr = sortArray(brr);
+            ArrayList l = new ArrayList();
+            for (int i = 0; i < sarr.Length; i++)
+            {
+                int j;
+                for (j = 0; j < i; j++)
+                {
+                    if (sarr[i] == sarr[j])
+                        break;
+                }
+                if (i == j)
+                    l.Add(sarr[i]);
+            }// end of for loop
+            // create the Unique array 
+            int[] UniArr = new int[l.Count];
+            int c = 0;
+            foreach (int i in l)
+            {
+                UniArr[c] = i;
+                c++;
+            }// end of foreach
+            return UniArr;
+        }
+        static int[] sortArray(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = i; j < arr.Length; j++)
+                {
+                    if (arr[i] > arr[j])
+                    {
+                        int temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }// end of if statement
+                }// end of innermost for loop
+            }// end of for loop
+            return arr;
         }
 
 
         // Complete the gradingStudents function below.
         static int[] gradingStudents(int[] grades)
         {
-            return new int[] { };
+            int[] newgrades = new int[grades.Length];
+            for (int i = 0; i < grades.Length; i++)
+            {
+                if (grades[i] >= 38)
+                {
+                    int multipleOfFive = grades[i] / 5;
+                    int reminderOfFive = grades[i] % 5;
+                    int reminder = ((multipleOfFive + 1) * 5) - grades[i];
+                    if (reminderOfFive == 0)
+                    {
+                        newgrades[i] = grades[i];
+                    }// end of if statement
+                    else if (reminder < 3)
+                    {
+                        newgrades[i] = (multipleOfFive + 1) * 5;
+                    }// end of elseif statement
+                    else
+                    {
+                        newgrades[i] = grades[i];
+                    }// end of else statement
+                }// end of if statement
+                else
+                {
+                    newgrades[i] = grades[i];
+                }// end of else statement
+            }// end of for loop
+            return newgrades;
         }
 
         // Complete the findMedian function below.
         static int findMedian(int[] arr)
         {
-            return 0;
+            
+            int median = 0;
+            int[] arrNew = sortArray(arr);
+            int mid = arrNew.Length / 2;
+            if (mid % 2 == 0)
+            {
+                median = (arrNew[mid] + arrNew[mid + 1]) / 2;
+            }// end of if statement
+            else
+            {
+                median = arrNew[mid];
+            }// end of else statement
+            return median;
         }
 
         // Complete the closestNumbers function below.
