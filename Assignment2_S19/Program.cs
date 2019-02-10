@@ -26,7 +26,7 @@ namespace Assignment2_S19
 
             // Balanced sums
             Console.WriteLine("\n\nBalanced sums");
-            List<int> arr = new List<int> { 1, 2, 3 };
+            List<int> arr = new List<int> { 1, 2, 3, 3 };
             Console.WriteLine(balancedSums(arr));
             Console.WriteLine("Press any key for next question..");
             Console.ReadKey(true);
@@ -69,6 +69,11 @@ namespace Assignment2_S19
             Console.WriteLine(dayOfProgrammer(year));
             Console.WriteLine("Press any key for next question..");
             Console.ReadKey(true);
+
+            /* 1. Got to learn about methods like sorting, small methods, using calendar.--Sagar Billore
+               2. Learned how to use conditional statements in an efficient way.--Keshav Deekonda
+               3. Learnt how to work collaboratively in GitHub environment. -- Mohit Dedhe
+             */
         }
 
         static void displayArray(int []arr) {
@@ -81,19 +86,99 @@ namespace Assignment2_S19
         // Complete the rotLeft function below.
         static int[] rotLeft(int[] a, int d)
         {
-            return new int[] {};
+            	int[] arr = new int[a.Length];
+                int k=0;
+		for(int i=d; i<arr.Length; i++)
+		{
+		        arr[k]=a[i];
+                k++;
+		}// end of for loop
+		for(int i=0; i<d; i++)
+		{
+			    arr[k]=a[i];
+                k++;
+		}// end of forloop
+        return arr;
         }
 
         // Complete the maximumToys function below.
         static int maximumToys(int[] prices, int k)
         {
-            return 0;
+                int[] ar=sortThearr(prices);
+		       int count= printToyValues(prices, k);
+            return count;
         }
+        public static int[]  sortThearr(int[] arr)
+	    {
+		    for(int i =0; i<arr.Length; i++)
+		        {
+			        for(int j=i+1; j<arr.Length; j++)
+			            {
+				            if(arr[i]> arr[j])
+				                {
+					            int temp = arr[i];
+					            arr[i]= arr[j];
+					            arr[j]=temp;
+				                }// end of if statement
+			            }// end of inner for loop
+		        }// end of for loop
+		    return arr;
+	    }
+	    public static int printToyValues(int[] arr, int k)
+	    {
+		    int sum=0, count =0;
+	        for( int i=0; i< arr.Length; i++)
+	        {
+	            sum += arr[i];
+                if (sum <= k)
+                    count++;
+                else
+                {
+                    break;
+                }
+
+            }
+            return count;
+	    }  
+
 
         // Complete the balancedSums function below.
         static string balancedSums(List<int> arr)
         {
-            return "";
+            bool flag = false;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                int sumleft = 0, sumright = 0;
+                for (int j = 0; j < i; j++)
+                {
+
+                    sumleft = sumleft + arr[j];
+                }
+                for (int h = i + 1; h < arr.Count; h++)
+                {
+
+                    sumright = sumright + arr[h];
+                }
+                if (sumleft == sumright)
+                {
+                    flag = true;
+                    break;
+                }
+                else if (i == 0 && sumright == 0)
+                {
+                    flag = true;
+                    break;
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
+            if (flag == false)
+                return "NO";
+            else
+                return "YES";
+
         }
 
         // Complete the missingNumbers function below.
