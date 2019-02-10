@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Collections;
 namespace Assignment2_S19
 {
     class Program
@@ -102,13 +102,150 @@ namespace Assignment2_S19
         // Complete the closestNumbers function below.
         static int[] closestNumbers(int[] arr)
         {
-            return new int[] { };
+            int[] arrNew = sortTheArray(arr);
+            int findTheMinDiff = findtheDiff(arrNew);
+            int[] returnArray = finalSol(arrNew, findTheMinDiff);
+
+            return returnArray;
         }
+        static int[] finalSol(int[] arr, int min)
+        {
+            ArrayList l = new ArrayList();
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int differ = arr[i + 1] - arr[i];
+                if (differ == min)
+                {
+                    l.Add(arr[i]);
+                    l.Add(arr[i + 1]);
+                }
+            }
+            int[] finalArray = new int[l.Count];
+            int k = 0;
+            foreach (int i in l)
+            {
+                finalArray[k] = i;
+                k++;
+            }
+            return finalArray;
+        }
+        static int findtheDiff(int[] arr)
+        {
+            int diff = arr[1] - arr[0];
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int differ = arr[i + 1] - arr[i];
+                if (differ < diff)
+                {
+                    diff = differ;
+                }
+            }
+            return diff;
+        }
+        static int[] sortTheArray(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = i; j < arr.Length; j++)
+                {
+                    if (arr[i] > arr[j])
+                    {
+                        int temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
 
         // Complete the dayOfProgrammer function below.
         static string dayOfProgrammer(int year)
         {
-            return "";
+            String finalDate = "";
+            if (year >= 1919)
+                finalDate = getTheDateGregorian(year);
+            else if (year <= 1917)
+                finalDate = getTheDateJulian(year);
+            else
+                finalDate = getTheDate1918(year);
+            //return the date to the function 
+            return finalDate;
         }
+        static string getTheDateGregorian(int year)
+        {
+            String finalDate = "";
+            //on the basis of sum of months in Leap year
+            int daystillAugustLYear = 244;
+            //on the basis of sum of months in normal year 
+            int daystillAugustYear = 243;
+            bool isLeap = isLeapYearGregorian(year);
+            if (isLeap == false)
+            {
+                int date = 256 - daystillAugustYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }
+            else
+            {
+                int date = 256 - daystillAugustLYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }
+            return finalDate;
+        }
+        static string getTheDateJulian(int year)
+        {
+            String finalDate = "";
+            //on the basis of sum of months in Leap year
+            int daytillAugustLYear = 244;
+            //on the basis of sum of months in normal year 
+            int daystillAugustYear = 243;
+            bool isLeap = isLeapYearJulian(year);
+            if (isLeap == false)
+            {
+                int date = 256 - daystillAugustYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }
+            else
+            {
+                int date = 256 - daytillAugustLYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }
+            return finalDate;
+        }
+        static string getTheDate1918(int year)
+        {
+            String finalDate = "";
+            //because here after the date of 31st Jan directly 14th Feb is there so 
+            int daytillAugustLYear = 230;
+            int date = 256 - daytillAugustLYear;
+            String format = date.ToString() + ".09." + year.ToString();
+            finalDate = format;
+            return finalDate;
+        }
+        static bool isLeapYearJulian(int year)
+        {
+            bool flag = false;
+
+            if (year % 4 == 0)
+                flag = true;
+
+            return flag;
+        }
+
+        static bool isLeapYearGregorian(int year)
+        {
+            bool flag = false;
+
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+                flag = true;
+
+            return flag;
+        }
+
     }
 }
